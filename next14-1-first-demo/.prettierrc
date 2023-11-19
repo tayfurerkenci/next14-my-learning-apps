@@ -1,0 +1,14 @@
+{
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "all",
+  "arrowParens": "avoid",
+  "bracketSpacing": true,
+  "endOfLine": "lf",
+  "quoteProps": "consistent",
+  "useTabs": false,
+  "tabWidth": 2,
+  "prettier": {
+    "plugins": ["prettier-plugin-jsx", "prettier-plugin-nextjs"]
+  }
+}
