@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { db } from '@/db';
 
@@ -9,13 +10,20 @@ export async function editSnippet(id: number, code: string) {
     data: { code },
   });
 
+  // Revalidate the snippet page (to dump cached old data)
+  revalidatePath(`/snippets/${id}`);
+
   redirect(`/snippets/${id}`);
 }
 
 export async function deleteSnippet(id: number) {
   await db.snippet.delete({ where: { id } });
 
-  redirect('/snippets');
+  // Revalidate the home page (to dump cached old data)
+  revalidatePath('/');
+
+  // Redirect to home page
+  redirect('/');
 }
 
 export async function createSnippet(
@@ -55,5 +63,9 @@ export async function createSnippet(
     }
   }
 
+  // Revalidate the home page (to dump cached old data)
+  revalidatePath('/');
+
+  // Redirect to home page
   redirect('/');
 }
