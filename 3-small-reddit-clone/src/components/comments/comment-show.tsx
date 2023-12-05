@@ -1,21 +1,22 @@
-import Image from "next/image";
-import { Button } from "@nextui-org/react";
-import CommentCreateForm from "@/components/comments/comment-create-form";
+import Image from 'next/image';
+
+import type { CommentWithAuthor } from '@/db/queries/comments';
+import CommentCreateForm from '@/components/comments/comment-create-form';
 
 interface CommentShowProps {
   commentId: string;
+  comments: CommentWithAuthor[];
 }
 
-// TODO: Get a list of comments
-export default function CommentShow({ commentId }: CommentShowProps) {
-  const comment = comments.find((c) => c.id === commentId);
+export default function CommentShow({ commentId, comments }: CommentShowProps) {
+  const comment = comments.find(c => c.id === commentId);
 
   if (!comment) {
     return null;
   }
 
-  const children = comments.filter((c) => c.parentId === commentId);
-  const renderedChildren = children.map((child) => {
+  const children = comments.filter(c => c.parentId === commentId);
+  const renderedChildren = children.map(child => {
     return (
       <CommentShow key={child.id} commentId={child.id} comments={comments} />
     );
@@ -25,7 +26,7 @@ export default function CommentShow({ commentId }: CommentShowProps) {
     <div className="p-4 border mt-2 mb-1">
       <div className="flex gap-3">
         <Image
-          src={comment.user.image || ""}
+          src={comment.user.image || ''}
           alt="user image"
           width={40}
           height={40}
