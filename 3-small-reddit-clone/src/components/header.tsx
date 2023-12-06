@@ -1,13 +1,14 @@
 import Link from 'next/link';
+import { Suspense } from 'react';
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Input,
 } from '@nextui-org/react';
 
-import HeaderAuth from './header-auth';
+import HeaderAuth from '@/components/header-auth';
+import SearchInput from '@/components/search-input';
 
 export default function Header() {
   return (
@@ -18,7 +19,11 @@ export default function Header() {
         </Link>
       </NavbarBrand>
       <NavbarContent justify="center">
-        <Input />
+        {/* SearchInput is a client component and using useSearchParams hook.
+        We have to wrap it with Suspense to avoid SSR errors. */}
+        <Suspense>
+          <SearchInput />
+        </Suspense>
       </NavbarContent>
       <NavbarContent justify="end">
         <HeaderAuth />
